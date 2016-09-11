@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MortgageCalculator</string>
+    <string name="loanAmount">Amount to be borrowed</string>
+    <string name="interestLabel">Interest Rate</string>
+    <string name="termLabel">Loan Term</string>
+    <string name="additionalLabel">Include the following to the payment:</string>
+    <string name="calculateButton">Calculate Mortgage</string>
+
+
+</resources>
