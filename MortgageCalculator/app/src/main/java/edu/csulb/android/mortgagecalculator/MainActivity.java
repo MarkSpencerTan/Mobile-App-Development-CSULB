@@ -12,6 +12,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button calcButton;
@@ -19,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar interestRate;
     private CheckBox tax, insurance;
     private RadioGroup loanTerm;
-    private TextView total;
+    private TextView total, progress;
     private static int months;
+    private DecimalFormat dFormat = new DecimalFormat("#.00");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +34,28 @@ public class MainActivity extends AppCompatActivity {
 
         InitializeVariables();
         calcButton.setOnClickListener(Calculate);
+        interestRate.setOnSeekBarChangeListener(changeBar);
     }
 
+    //shows progress when SeekBar changes
+    private SeekBar.OnSeekBarChangeListener changeBar = new SeekBar.OnSeekBarChangeListener() {
+        double p = 0;
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
+            p = progresValue;
+            progress.setText(dFormat.format(p)+"%");
+        }
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+        }
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            // Display the value in textview
+            progress.setText(dFormat.format(p)+"%");
+        }
+    };
+
+    //calculates the mortgage payment monthly
     private View.OnClickListener Calculate = new View.OnClickListener(){
         public void onClick(View view){
             if( principal.getText().length() == 0 ){
@@ -43,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
             double additional = getAdditional(p); //adds taxes and insurance
             months = getTerm(); //gets number of months of the loan
-            Toast.makeText(getBaseContext(),"years: "+months/12,Toast.LENGTH_LONG).show();
 
             if( interest == 0 ){
                 setTotal(p/months + additional);
@@ -54,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    //gets the number of terms/duration of the loan from the checkboxes
     private int getTerm(){
         loanTerm = (RadioGroup) findViewById(R.id.loanTerm);
         int term = loanTerm.getCheckedRadioButtonId();
@@ -79,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setTotal(double t){
-        total.setText(Double.toString(t));
+        total.setText(dFormat.format(t));
     }
 
     //initialize xml elements to java
@@ -87,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         calcButton = (Button) findViewById(R.id.calculateButton);
         principal = (EditText) findViewById(R.id.loanAmount);
         interestRate = (SeekBar) findViewById(R.id.interest);
+        progress = (TextView) findViewById(R.id.progress);
         tax = (CheckBox) findViewById(R.id.taxesBox);
         insurance = (CheckBox) findViewById(R.id.insuranceBox);
         total = (TextView) findViewById(R.id.total);

@@ -38,16 +38,27 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="10.0"
+        android:padding="10sp"
+        android:id="@+id/progress"
+        android:layout_below="@+id/interest"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/termLabel"
         android:id="@+id/termLabel"
         android:textSize="18sp"
-        android:layout_below="@+id/interest"
+        android:layout_below="@+id/progress"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="5sp"
         android:layout_marginLeft="5sp"/>
 
@@ -55,10 +66,10 @@
         android:id="@+id/loanTerm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/interest"
+        android:layout_below="@+id/progress"
         android:layout_alignLeft="@+id/interestText"
         android:layout_alignStart="@+id/interestText"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal">
 
         <RadioButton
@@ -145,6 +156,8 @@
         android:layout_below="@+id/calculateButton"
         android:layout_alignRight="@+id/calculateButton"
         android:layout_alignEnd="@+id/calculateButton" />
+
+
 
 
 </RelativeLayout>
