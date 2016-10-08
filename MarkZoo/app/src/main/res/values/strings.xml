@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">MarkZoo</string>
+    <string name="zoo_description">Please call us for more information or if you would like to purchase tickets</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_zooinfo">Zoo Info</string>
+</resources>
