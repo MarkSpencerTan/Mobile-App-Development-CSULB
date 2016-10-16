@@ -13,13 +13,12 @@ public class Lab1Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.main);
         Bundle myInput = this.getIntent().getExtras();
 
         TextView t = new TextView(this);
         t = (TextView) findViewById(R.id.textView2);
-        t.setText("Hello " + myInput.getString("uname") );
+        t.setText(getText(R.string.Hello)+ " " + myInput.getString("uname") );
 
         Animation fade = new AlphaAnimation(0.0f, 1.0f);
         fade.setDuration(3000);
