@@ -1,7 +1,6 @@
 package com.example.accgame;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -9,13 +8,11 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Surface;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -106,7 +103,7 @@ public class SimulationView extends View implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event){
         if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            if(getRotation() == Surface.ROTATION_90){
+            if(mDisplay.getRotation() == Surface.ROTATION_90){
                 mXBall = -event.values[1];
                 mYBall = event.values[0];
             }
@@ -115,7 +112,7 @@ public class SimulationView extends View implements SensorEventListener {
                 mYBall = event.values[1];
             }
             mZBall = event.values[2];
-            timestamp = event.timestamp/10;
+            timestamp = event.timestamp;
         }
     }
 
@@ -123,9 +120,22 @@ public class SimulationView extends View implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy){}
 
     @Override
+    public void onSizeChanged(int w, int h, int oldw, int oldh){
+        Bitmap ball = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
+        mBitmap = Bitmap.createScaledBitmap(ball, BALL_SIZE, BALL_SIZE, true);
+        Bitmap basket = BitmapFactory.decodeResource(getResources(), R.drawable.basket);
+        mBasket = Bitmap.createScaledBitmap(basket, BASKET_SIZE, BASKET_SIZE, true);
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inDither = true;
+        opts.inPreferredConfig = Bitmap.Config.RGB_565;
+        mField = BitmapFactory.decodeResource(getResources(), R.drawable.field, opts);
+
+        WindowManager mWindowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        mDisplay = mWindowManager.getDefaultDisplay();
+    }
+
+    @Override
     public void onDraw(Canvas canvas){
-
-
         super.onDraw(canvas);
         canvas.drawBitmap(mField, 0,0,null);
         canvas.drawBitmap(mBasket, mXOrigin - BASKET_SIZE/2, mYOrigin-BASKET_SIZE/2, null);

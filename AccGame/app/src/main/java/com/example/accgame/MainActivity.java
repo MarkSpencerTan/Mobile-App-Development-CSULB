@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         PowerManager mPowerManager = (PowerManager) getSystemService(POWER_SERVICE);
         mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, TAG);
 
-        mSimulationView = new SimulationView(this);
+        mSimulationView = (SimulationView) findViewById(R.id.simview);
     }
     @Override
     protected void onResume(){
